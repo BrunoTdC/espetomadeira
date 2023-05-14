@@ -104,16 +104,27 @@ def filter():
 
         cursor = mydb.cursor()
         
-        cursor.execute(f'select * from lancamentos where codigo = "{codigo}" and formpgm = "{forma}"')
-        filter = cursor.fetchall()
+        cursor.execute(f"""select 
+                        l.data, c.codigo, l.descricao, l.formpgm, l.tipo, l.valor, u.usuario 
+                    from lancamentos as l
+                    join usuarios as u
+                    on l.id_user = u.id
+                    join codigos as c
+                    on l.codigo = c.codigo
+                 where l.codigo = '{codigo}' and formpgm = '{forma}'""")
+        
 
+        filter1 = cursor.fetchall()
+
+        for linha in filter1:
+            print(linha)
         
         total = 0.0
-        for linha in filter:
-            if linha[5] == "entrada":
-                total += linha[6]
+        for linha in filter1:
+            if linha[4] == "entrada":
+                total += linha[5]
             else:
-                total -= linha[6]
+                total -= linha[5]
                 print(linha)
 
         total = f'R$ {total:,.2f}'
@@ -122,7 +133,7 @@ def filter():
         total = total.replace("/", ".")
         
       
-        return redirect("to_pdf.html",total = total, filter = filter)
+        return render_template("filter.html",total = total, filter1 = filter1)
 
     if 'user_id' in session:
         

@@ -140,7 +140,7 @@
                 <th>Usuario</th>
               </tr>
             </thead>
-            {% for linha in dados %}
+            {% for linha in filter1 %}
               <tbody>
                 <style>
                   .center{
@@ -148,17 +148,17 @@
                   }
                 </style>
                 <tr>
-                  <td>{{linha["data"].strftime('%d/%m/%Y')}}</td>
-                  <td>{{linha["nome"]}}</td>
-                  <td>{{linha["descricao"]}}</td>
-                  <td>{{linha["formpgm"]}}</td>
-                  {% if linha["tipo"] == "entrada" %}
-                  <td class="text-success"><strong>{{linha["tipo"]}}</strong></td>
+                  <td>{{linha["0"].strftime('%d/%m/%Y')}}</td>
+                  <td>{{linha["1"]}}</td>
+                  <td>{{linha["2"]}}</td>
+                  <td>{{linha["3"]}}</td>
+                  {% if linha["4"] == "entrada" %}
+                  <td class="text-success"><strong>{{linha["4"]}}</strong></td>
                   {% else %}
-                  <td class="text-danger"><strong>{{linha["tipo"]}}</strong></td>
+                  <td class="text-danger"><strong>{{linha["4"]}}</strong></td>
                   {% endif %}
-                  <td>R$ {{ '%0.2f'|format(linha["valor"]) | replace(".", ",")}}</td>
-                  <td>{{linha["usuario"]}}</td>
+                  <td>R$ {{ '%0.2f'|format(linha["5"]) | replace(".", ",")}}</td>
+                  <td>{{linha["6"]}}</td>
                   
                 </tr>
                 {% endfor %}
